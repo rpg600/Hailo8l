@@ -3,8 +3,8 @@
 ### Install Requirements
 ```bash
 sudo apt-get update
-sudo apt-get install python3-picamera2
-pip install opencv-python Pillow
+sudo apt-get install -y python3-picamera2 
+pip install opencv-python Pillow picamera2 --break-system-packages
 ```
 
 ### Get Images
