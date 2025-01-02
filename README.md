@@ -268,23 +268,27 @@ sudo apt-get install build-essential python3-dev graphviz graphviz-dev python3-t
 pip install pygraphviz scipy==1.9.3
 ```
 
+Install hailo_dataflow_compiler 
 ```bash
 pip install whl/hailo_dataflow_compiler-3.29.0-py3-none-linux_x86_64.whl
 ```
 
+Install hailo_model_zoo 
 ```bash
 git clone https://github.com/hailo-ai/hailo_model_zoo.git
 cd hailo_model_zoo; pip install -e .
 ```
+-Use your own username /home/USER
 
+Parse
 ```bash
 python steps/3_process/parse_yolo11n.py
 ```
-
+Optimize
 ```bash
 python steps/3_process/optimize_yolo11n.py
 ```
-
+Compile
 ```bash
 python steps/3_process/compile_yolo11n.py
 ```
