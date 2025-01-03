@@ -3,6 +3,8 @@
     "max_boxes":200,
     "labels": [
       "background",
-      "Book"
+      "Book",
+      "Green Cube",
+      "Red Circle"
     ]
 }

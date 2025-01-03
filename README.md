@@ -226,6 +226,19 @@ python hailo-rpi5-examples/basic_pipelines/detection.py -i rpi --hef best_quanti
 git clone https://github.com/BetaUtopia/Hailo8l.git
 ```
 
+# Labeling with Label Studio
+```bash
+sudo apt install python3-pip
+python3 -m venv venv_labelstudio
+source venv_labelstudio/bin/activate
+pip install label-studio
+label-studio start
+```
+
+```bash
+cd ~/Hailo8l && deactivate
+```
+
 ### Training
 ```bash
 cd Hailo8l
@@ -269,12 +282,12 @@ pip install pygraphviz scipy==1.9.3
 ```
 
 ```bash
-pip install whl/hailo_dataflow_compiler-3.29.0-py3-none-linux_x86_64.whl
+sudo reboot
 ```
 
 ```bash
-git clone https://github.com/hailo-ai/hailo_model_zoo.git
-cd hailo_model_zoo; pip install -e .
+pip install whl/hailo_dataflow_compiler-3.30.0-py3-none-linux_x86_64.whl
+pip install whl/hailo_model_zoo-2.14.0-py3-none-any.whl
 ```
 
 ```bash
@@ -287,4 +300,47 @@ python steps/3_process/optimize_yolo11n.py
 
 ```bash
 python steps/3_process/compile_yolo11n.py
+```
+
+### Raspbery Pi
+
+```bash
+sudo apt update
+sudo apt full-upgrade
+sudo apt install hailo-all
+sudo reboot
+```
+
+Check Versions
+
+```bash
+hailortcli fw-control identify
+```
+
+```bash
+git clone https://github.com/hailo-ai/hailo-rpi5-examples.git
+cd hailo-rpi5-examples
+```
+
+```bash
+./install.sh
+```
+
+```bash
+source setup_env.sh
+```
+
+```bash
+python basic_pipelines/detection.py -i rpi --hef /home/pi/Hailo8l/best.hef --labels-json /home/pi/Hailo8l/labels_yolov11n.json
+```
+
+### Raspbery Pi with picamera2
+
+```bash
+pip uninstall opencv-python --break-system-packages
+pip install opencv-python-headless --break-system-packages
+```
+
+```bash
+python steps/4_test/detect_picamera2.py
 ```
