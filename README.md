@@ -226,7 +226,7 @@ python hailo-rpi5-examples/basic_pipelines/detection.py -i rpi --hef best_quanti
 git clone https://github.com/BetaUtopia/Hailo8l.git
 ```
 
-# Labeling with Label Studio
+### Labeling with Label Studio
 ```bash
 sudo apt install python3-pip
 python3 -m venv venv_labelstudio
