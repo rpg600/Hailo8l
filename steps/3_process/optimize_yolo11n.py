@@ -28,7 +28,7 @@ def preproc(image, output_height=896, output_width=896, resize_side=896):
         return tf.squeeze(cropped_image)
 
 
-images_path = './Bee And Asian Hornet Detection/train/'
+images_path = '/root/calib_images/'
 images_list = [img_name for img_name in os.listdir(images_path) if
                os.path.splitext(img_name)[1] == '.jpg']
 
@@ -44,7 +44,7 @@ print(calib_dataset.shape)
 
 # Second, we will load our parsed HAR from the Parsing Tutorial
 
-path_l = '/root/runs/detect/train5/weights/'
+path_l = '/root/results/weights/'
 model_name = path_l+'best'
 hailo_model_har_name = f'{model_name}.har'
 assert os.path.isfile(hailo_model_har_name), 'Please provide valid path for HAR file'
