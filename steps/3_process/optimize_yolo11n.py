@@ -17,7 +17,7 @@ IMAGES_TO_VISUALIZE = 5
 from tensorflow.python.eager.context import eager_mode
 
 
-def preproc(image, output_height=640, output_width=640, resize_side=640):
+def preproc(image, output_height=896, output_width=896, resize_side=896):
     ''' imagenet-standard: aspect-preserving resize to 256px smaller-side, then central-crop to 224px'''
     with eager_mode():
         h, w = image.shape[0], image.shape[1]
@@ -28,11 +28,11 @@ def preproc(image, output_height=640, output_width=640, resize_side=640):
         return tf.squeeze(cropped_image)
 
 
-images_path = '/home/sam/Hailo8l/datasets/images/train/'
+images_path = './Bee And Asian Hornet Detection/train/'
 images_list = [img_name for img_name in os.listdir(images_path) if
                os.path.splitext(img_name)[1] == '.jpg']
 
-calib_dataset = np.zeros((len(images_list), 640, 640, 3))
+calib_dataset = np.zeros((len(images_list), 896, 896, 3))
 for idx, img_name in enumerate(sorted(images_list)):
     img = np.array(Image.open(os.path.join(images_path, img_name)))
     img_preproc = preproc(img)
@@ -44,7 +44,7 @@ print(calib_dataset.shape)
 
 # Second, we will load our parsed HAR from the Parsing Tutorial
 
-path_l = '/home/sam/Hailo8l/model/runs/detect/retrain_yolov11n/weights/'
+path_l = '/root/runs/detect/train5/weights/'
 model_name = path_l+'best'
 hailo_model_har_name = f'{model_name}.har'
 assert os.path.isfile(hailo_model_har_name), 'Please provide valid path for HAR file'
@@ -57,7 +57,7 @@ normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
 change_output_activation(conv54, sigmoid)
 change_output_activation(conv65, sigmoid)
 change_output_activation(conv80, sigmoid)
-nms_postprocess("/home/sam/Hailo8l/config/postprocess_config/yolov11n_nms_config.json", meta_arch=yolov8, engine=cpu)
+nms_postprocess("/root/Hailo8l/config/postprocess_config/yolov11n_nms_config.json", meta_arch=yolov8, engine=cpu)
 
 allocator_param(width_splitter_defuse=disabled)
 '''
