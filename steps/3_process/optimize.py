@@ -17,7 +17,7 @@ IMAGES_TO_VISUALIZE = 5
 from tensorflow.python.eager.context import eager_mode
 
 
-def preproc(image, output_height=896, output_width=896, resize_side=896):
+def preproc(image, output_height=640, output_width=640, resize_side=640):
     ''' imagenet-standard: aspect-preserving resize to 256px smaller-side, then central-crop to 224px'''
     with eager_mode():
         h, w = image.shape[0], image.shape[1]
@@ -32,7 +32,7 @@ images_path = '/root/calib_images/'
 images_list = [img_name for img_name in os.listdir(images_path) if
                os.path.splitext(img_name)[1] == '.jpg']
 
-calib_dataset = np.zeros((len(images_list), 896, 896, 3))
+calib_dataset = np.zeros((len(images_list), 640, 640, 3))
 for idx, img_name in enumerate(sorted(images_list)):
     img = np.array(Image.open(os.path.join(images_path, img_name)))
     img_preproc = preproc(img)
@@ -52,12 +52,12 @@ runner = ClientRunner(har=hailo_model_har_name)
 # By default it uses the hw_arch that is saved on the HAR. For overriding, use the hw_arch flag.
 
 alls = '''
-quantization_param([conv120, conv143, conv165], force_range_out=[0.0, 1.0])
+quantization_param([conv54, conv65, conv80], force_range_out=[0.0, 1.0])
 normalization1 = normalization([0.0, 0.0, 0.0], [255.0, 255.0, 255.0])
-change_output_activation(conv120, sigmoid)
-change_output_activation(conv143, sigmoid)
-change_output_activation(conv165, sigmoid)
-nms_postprocess("/root/Hailo8l/config/postprocess_config/yolov11l_nms_config.json", meta_arch=yolov8, engine=cpu)
+change_output_activation(conv54, sigmoid)
+change_output_activation(conv65, sigmoid)
+change_output_activation(conv80, sigmoid)
+nms_postprocess("/root/Hailo8l/config/postprocess_config/yolov11s_nms_config.json", meta_arch=yolov8, engine=cpu)
 
 allocator_param(width_splitter_defuse=disabled)
 '''
