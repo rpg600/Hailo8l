@@ -2,8 +2,8 @@
     "nms_scores_th": 0.2,
     "nms_iou_th": 0.7,
     "image_dims": [
-        864,
-        1024
+        640,
+        640
     ],
     "max_proposals_per_class": 100,
     "classes": 2,
